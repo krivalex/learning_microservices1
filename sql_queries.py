@@ -66,13 +66,14 @@ def get_transactions() -> list[Transaction]:
         id=transaction[0],
         description=transaction[1],
         price=transaction[2],
-        receiver=transaction[3],
-        sender_id=transaction[4],
-        receiver_id=transaction[5],
-        quantity=transaction[6],
-        amount=transaction[7],
-        created=transaction[8],
-        status=transaction[9],
+        sender=transaction[3],
+        receiver=transaction[4],
+        sender_id=transaction[5],
+        receiver_id=transaction[6],
+        quantity=transaction[7],
+        amount=transaction[8],
+        created=transaction[9],
+        status=transaction[10],
 
     ) for transaction in cursor.fetchall()]
 

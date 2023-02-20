@@ -6,7 +6,6 @@ import random
 create_table()
 
 # симуляция инфляции цен
-# они теперь будут расти на 1-100 рублей каждые 10 секунд
 
 if __name__ == '__main__':
     while True:
@@ -16,6 +15,10 @@ if __name__ == '__main__':
               quantity = random.randint(1, 100),
               description="service5",
               amount=0,
+              sender="krivalex",
+              receiver="timur",
+              sender_id=222,
+              receiver_id=111,
             )
         )
         print("service5: new transaction")
