@@ -9,11 +9,15 @@ if __name__ == '__main__':
     while True:
         insert_transaction(
             Transaction(
-                description=random.choice(["apple", "banana", "orange"]),
-                price=random.randint(1, 100),
-                quantity=random.randint(1, 10),
+                description=random.choice(["halyk", "kaspi", "forte", "kazkommertsbank", "kazpostbank"]),
+                price=random.randint(-100, 100),
+                quantity=random.randint(0, 10),
                 amount=0,
+                sender="krivalex",
+                receiver="timur",
+                sender_id=666,
+                receiver_id=228,
             )
         )
-        print("Inserted")
+        print("Add new Bank transaction")
         time.sleep(10)

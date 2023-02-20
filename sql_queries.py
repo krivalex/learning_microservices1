@@ -12,10 +12,14 @@ conn = psycopg2.connect(
 
 def create_table():
     query = """
-    CREATE TABLE IF NOT EXISTS transactions (
+    CREATE TABLE IF NOT EXISTS transactions_krivalex2 (
         id SERIAL PRIMARY KEY,
         description VARCHAR(255) NOT NULL,
         price INTEGER NOT NULL,
+        sender VARCHAR(255) NOT NULL,
+        receiver VARCHAR(255) NOT NULL,
+        sender_id INTEGER NOT NULL,
+        receiver_id INTEGER NOT NULL,
         quantity INTEGER NOT NULL,
         amount INTEGER,
         created DATE DEFAULT NOW(),
@@ -30,39 +34,45 @@ def create_table():
 
 def insert_transaction(transaction: Transaction):
     query = """
-    INSERT INTO transactions (description, price, quantity, amount)
-    VALUES (%s, %s, %s, %s)
+    INSERT INTO transactions_krivalex2 (description, price, sender, receiver, sender_id, receiver_id, quantity, amount)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     cursor = conn.cursor()
-    cursor.execute(query, (transaction.description, transaction.price, transaction.quantity, transaction.amount))
+    cursor.execute(query, (transaction.description, transaction.price, transaction.sender, transaction.receiver, transaction.sender_id, 
+                           transaction.receiver_id, transaction.quantity, transaction.amount))
     conn.commit()
 
 
 def update_transactions():
-    query = "UPDATE transactions SET amount=price*quantity, status='calculated' WHERE status='new';"
+    query = "UPDATE transactions_krivalex2 SET amount=price*quantity, status='calculated' WHERE status='new';"
     cursor = conn.cursor()
     cursor.execute(query)
     conn.commit()
 
 
 def complete_transactions():
-    query = "UPDATE transactions SET status='completed' WHERE status='calculated';"
+    query = "UPDATE transactions_krivalex2 SET status='completed' WHERE status='calculated';"
     cursor = conn.cursor()
     cursor.execute(query)
     conn.commit()
 
 
 def get_transactions() -> list[Transaction]:
-    query = "SELECT * FROM transactions;"
+    query = "SELECT * FROM transactions_krivalex2;"
     cursor = conn.cursor()
     cursor.execute(query)
     return [Transaction(
         id=transaction[0],
         description=transaction[1],
         price=transaction[2],
-        quantity=transaction[3],
-        amount=transaction[4],
-        created=transaction[5],
-        status=transaction[6],
+        receiver=transaction[3],
+        sender_id=transaction[4],
+        receiver_id=transaction[5],
+        quantity=transaction[6],
+        amount=transaction[7],
+        created=transaction[8],
+        status=transaction[9],
+
     ) for transaction in cursor.fetchall()]
+

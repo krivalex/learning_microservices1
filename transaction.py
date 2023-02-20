@@ -6,6 +6,10 @@ from typing import Optional
 class Transaction:
     description: str
     price: int
+    sender: str
+    receiver: str
+    sender_id: int
+    receiver_id: int
     quantity: int
     amount: int
     created: str = ""
